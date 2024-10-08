@@ -2,10 +2,13 @@
 :root{
   --s-color:#640D5F;
 
-  --p-color:#EDE8DC;
+  --p-color:#eae7df;
   --t-color:#A594F9
 }
 
+html{
+  scroll-behavior: smooth;
+}
 a{
   text-decoration: none;
   color: inherit;
@@ -16,6 +19,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--p-color);
+
 }
 *{
   padding: 0;

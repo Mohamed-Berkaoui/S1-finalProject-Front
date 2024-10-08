@@ -35,3 +35,7 @@
 .navbar div p:active {
   scale: 0.9;
 }
+
+.navbar .active{
+  color: violet !important;
+}
