@@ -11,15 +11,17 @@ function NavBar() {
     <div className="navbar">
       <img src="/amazon-logo-png.webp" alt="" />
       <div>
-        <p className={location=="/"?"active":null}>
+        <p className={location==="/"?"active":null}>
           <Link to={"/"}>home</Link>
         </p>
-        <p  className={location=="/products"?"active":null}><Link to={"/products"}>our products</Link></p>
+        <p  className={location==="/products"?"active":null}><Link to={"/products"}>our products</Link></p>
         {existUser ? (
           <>
-            <p>cart</p>
-            <p>my orders</p>
+           <Link  to={"/mycart"}> <p>cart</p></Link>
+         <Link to={"/myorders"}>   <p>my orders</p></Link>
+
             <p style={{color:"blue"}}>logout</p>
+            <Link to={"/myprofile"}><img className="avatar" src={existUser.avatar} alt="" /></Link>
           </>
         ) : (
           <>

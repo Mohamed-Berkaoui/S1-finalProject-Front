@@ -3,7 +3,7 @@ import Button from "./Button"
 
 
 function ProductDiscription() {
-    const inStock=false
+    const inStock=true
   return (
     <div className="product-desc">
               <div className="right">

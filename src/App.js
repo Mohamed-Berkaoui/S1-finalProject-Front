@@ -7,21 +7,25 @@ import RegistrationPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import ProductPage from "./pages/ProductPage";
 import OurProductsPage from "./pages/OurProductsPage";
-import { useState } from "react";
+import CartPage from "./pages/CartPage";
+import OrderPage from "./pages/OrderPage";
+import ProfilePage from "./pages/ProfilePage";
+import PreviousOrders from "./pages/PreviousOrders";
 
 function App() {
-
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/register" element={<RegistrationPage/>} />
-        <Route path="/login" element={<LoginPage/>} />
-        <Route path="/products/" element={<OurProductsPage/>} />
-        <Route path="/products/:id" element={<ProductPage/>} />
-
-
+        <Route path="/register" element={<RegistrationPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/products/" element={<OurProductsPage />} />
+        <Route path="/products/:id" element={<ProductPage />} />
+        <Route path="/mycart" element={<CartPage />} />
+        <Route path="/order" element={<OrderPage />} />
+        <Route path="/myprofile" element={<ProfilePage />} />
+        <Route path="/myorders" element={<PreviousOrders/>}/>
       </Routes>
       <Footer />
     </>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import '../styles/productbox.css'
 import Button from './Button'
 
@@ -7,7 +8,7 @@ function ProductBox({prod}) {
     <div className='product-box'>
 <div className="right">
     <img src="./images.jpg" alt="" />
-    <Button> show more</Button>
+  <Link to={"/products/1"}>  <Button> show more</Button></Link>
 </div>
 <div className="left">
     <h4>product title {prod}</h4>

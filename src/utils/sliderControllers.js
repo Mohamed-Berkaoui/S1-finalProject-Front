@@ -1,6 +1,6 @@
 export function nextImage(state, setState,timeOut) {
   return function () {
-    clearTimeout(timeOut.current)
+    clearInterval(timeOut.current)
     if (state === 2) {
       setState(0);
     } else {
@@ -14,7 +14,7 @@ export function nextImage(state, setState,timeOut) {
 }
 export function prevImage(state, setState,timeOut) {
   return function () {
-    clearTimeout(timeOut.current)
+    clearInterval(timeOut.current)
     if (state === 0) {
       setState(2);
     } else {
