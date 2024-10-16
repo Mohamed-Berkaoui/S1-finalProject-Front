@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import appAxios from '../utils/AxiosConfig';
+import { toast } from 'react-toastify';
 
 const RegistrationPage = () => {
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: ''
   });
@@ -14,8 +17,19 @@ const RegistrationPage = () => {
   };
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    console.log(formData)
+    appAxios.post('/api/auth/register',formData)
+    .then(res=>{
+      if(res.data.status==="SUCCESS"){
+        toast.success('registered succsessfuly')
+      setTimeout(()=>  navigate('/login'),1000)
+      }
+      else{
+        toast.error('somthing went Wrong')
+      }
+    }).catch(e=>console.log(e))
   };
 
   return (
@@ -27,7 +41,7 @@ const RegistrationPage = () => {
           <input
             type="text"
             id="username"
-            name="username"
+            name="name"
             value={formData.username}
             onChange={handleChange}
             required

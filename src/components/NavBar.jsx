@@ -6,7 +6,7 @@ function NavBar() {
   const mylocation=useLocation()
   const location=mylocation.pathname
 
-  const { existUser } = useContext(existUserContext);
+  const { existUser,setExistUser } = useContext(existUserContext);
   return (
     <div className="navbar">
       <img src="/amazon-logo-png.webp" alt="" />
@@ -20,7 +20,9 @@ function NavBar() {
            <Link  to={"/mycart"}> <p>cart</p></Link>
          <Link to={"/myorders"}>   <p>my orders</p></Link>
 
-            <p style={{color:"blue"}}>logout</p>
+            <p style={{color:"blue"}} onClick={()=>{localStorage.clear()
+              setExistUser(null)
+            }}>logout</p>
             <Link to={"/myprofile"}><img className="avatar" src={existUser.avatar} alt="" /></Link>
           </>
         ) : (

@@ -1,13 +1,13 @@
 import { NativeSelect, Slider, TextField } from "@mui/material";
 import React, { useState } from "react";
 
-function Search() {
-  const [search, setSearch] = useState({
-    title: "",
-    category: "",
-    priceRange: [0, 100],
-  });
-  console.log(search);
+function Search({search, setSearch}) {
+  // const [search, setSearch] = useState({
+  //   title: "",
+  //   category: "",
+  //   priceRange: [0, 100],
+  // });
+
 
   const handleSearch = (e) =>
     setSearch({ ...search, [e.target.name]: e.target.value });
@@ -39,9 +39,15 @@ function Search() {
               id: "uncontrolled-native",
             }}
           >
-            <option value={10}>Ten</option>
-            <option value={20}>Twenty</option>
-            <option value={30}>Thirty</option>
+            <option value={""}>all</option>
+            <option value={"keybord"}>keybord</option>
+
+            <option value={"mouse"}>mouse</option>
+            <option value={"headphone"}>headphone</option>
+            <option value={"monitor"}>monitor</option>
+            <option value={"webcam"}>webcam</option>
+
+
           </NativeSelect>
         </div>
 

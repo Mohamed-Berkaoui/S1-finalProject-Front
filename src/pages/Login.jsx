@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "../styles/loginregister.css"
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import appAxios from '../utils/AxiosConfig';
+import { existUserContext } from '../context/UserContext';
 
 const LoginPage = () => {
+  const {  setExistUser }=useContext(existUserContext)
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: ''
   });
@@ -16,8 +19,15 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-  };
+    toast.promise(appAxios.post("/api/auth/login",formData).then(res=>{localStorage.setItem("user",JSON.stringify(res.data.data))
+      setExistUser(res.data.data)
+    }),{
+      pending:'loading',
+      success:'success',
+      error:"error"
+    }  
+  )
+ };
 
   return (
     <div  className='register-login'>

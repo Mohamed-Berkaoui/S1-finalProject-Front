@@ -11,10 +11,13 @@ import CartPage from "./pages/CartPage";
 import OrderPage from "./pages/OrderPage";
 import ProfilePage from "./pages/ProfilePage";
 import PreviousOrders from "./pages/PreviousOrders";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(()=>window.scrollTo(0, 0))
   return (
     <>
+
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
