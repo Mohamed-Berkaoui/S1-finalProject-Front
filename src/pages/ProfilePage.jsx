@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
-import "../styles/profilepage.css"
-import { existUserContext } from '../context/UserContext';
+import React, { useContext, useState } from "react";
+import "../styles/profilepage.css";
+import { existUserContext } from "../context/UserContext";
+import appAxios, { baseURL } from "../utils/AxiosConfig";
+
 
 const ProfilePage = () => {
- const {existUser, setExistUser}=useContext(existUserContext)
-
+  const { existUser, setExistUser } = useContext(existUserContext);
   const [isEditing, setIsEditing] = useState(false);
-  const [formValues, setFormValues] = useState(existUser);
+  const [formValues, setFormValues] = useState(existUser.user);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,23 +23,49 @@ const ProfilePage = () => {
       };
       reader.readAsDataURL(file);
     }
+    const formData=new FormData()
+    formData.append("avatar",file)
+    appAxios.put('/api/user/updateimage/'+existUser.user._id,formData,{headers:{Authorization:existUser.token}})
+    .then(res=>  localStorage.setItem("user",JSON.stringify({token:existUser.token,user:res.data.data})))
+    .then(()=> setExistUser(JSON.parse(localStorage.getItem("user"))))
+    .catch(e=>console.log(e))
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setExistUser(formValues);
+
+    appAxios
+      .put(
+        "/api/user/update/" + existUser.user._id,
+        {
+          name: formValues.name,
+          address: formValues.address,
+          phone: formValues.phone,
+        },
+        { headers: { Authorization: existUser.token } }
+      )
+      .then((res) =>{console.log(res.data.data)
+        localStorage.setItem("user",JSON.stringify({token:existUser.token,user:res.data.data}))
+       
+    }).then(res=>{      console.log(existUser)
+      setExistUser(JSON.parse(localStorage.getItem("user")))})
+      .catch((e) => console.log(e));
     setIsEditing(false);
   };
 
   const handleEdit = () => {
-    setFormValues(existUser);
+    setFormValues(existUser.user);
     setIsEditing(true);
   };
-
+let [address,setAddress]=useState(formValues.addresses[formValues.addresses.length-1])
   return (
     <div className="profile-container">
       <h1>Profile Page</h1>
-      <img src={existUser.avatar} alt="Avatar" className="avatar" />
+      <img
+        src={baseURL + existUser?.user?.avatar}
+        alt="Avatar"
+        className="avatar"
+      />
 
       {isEditing ? (
         <form onSubmit={handleSubmit}>
@@ -49,7 +76,7 @@ const ProfilePage = () => {
               name="name"
               value={formValues.name}
               onChange={handleInputChange}
-              required
+              
             />
           </label>
           <label>
@@ -57,9 +84,10 @@ const ProfilePage = () => {
             <input
               type="text"
               name="address"
-              value={formValues.address}
-              onChange={handleInputChange}
-              required
+              value={address}
+
+              onChange={(e)=>{handleInputChange(e);setAddress(e.target.value)}}
+              
             />
           </label>
           <label>
@@ -69,25 +97,29 @@ const ProfilePage = () => {
               name="phone"
               value={formValues.phone}
               onChange={handleInputChange}
-              required
+              
             />
           </label>
           <label>
             Avatar:
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
+            <input type="file" accept="image/*" onChange={handleFileChange} />
           </label>
           <button type="submit">Save</button>
-          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+          <button type="button" onClick={() => setIsEditing(false)}>
+            Cancel
+          </button>
         </form>
       ) : (
         <div className="profile-info">
-          <p><strong>Name:</strong> {existUser.name}</p>
-          <p><strong>Address:</strong> {existUser.address}</p>
-          <p><strong>Phone Number:</strong> {existUser.phone}</p>
+          <p>
+            <strong>Name:</strong> {existUser?.user?.name}
+          </p>
+          <p>
+            <strong>Address:</strong> {existUser?.user?.addresses[existUser?.user?.addresses.length-1]}
+          </p>
+          <p>
+            <strong>Phone Number:</strong> {existUser?.user?.phone}
+          </p>
           <button onClick={handleEdit}>Edit</button>
         </div>
       )}

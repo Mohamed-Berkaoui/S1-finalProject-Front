@@ -2,11 +2,6 @@ import { NativeSelect, Slider, TextField } from "@mui/material";
 import React, { useState } from "react";
 
 function Search({search, setSearch}) {
-  // const [search, setSearch] = useState({
-  //   title: "",
-  //   category: "",
-  //   priceRange: [0, 100],
-  // });
 
 
   const handleSearch = (e) =>

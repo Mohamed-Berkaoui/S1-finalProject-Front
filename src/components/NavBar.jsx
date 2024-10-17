@@ -1,11 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 import { useContext } from "react";
 import { existUserContext } from "../context/UserContext";
+import { baseURL } from "../utils/AxiosConfig";
 function NavBar() {
   const mylocation=useLocation()
   const location=mylocation.pathname
-
+const navigate=useNavigate()
   const { existUser,setExistUser } = useContext(existUserContext);
   return (
     <div className="navbar">
@@ -22,8 +23,9 @@ function NavBar() {
 
             <p style={{color:"blue"}} onClick={()=>{localStorage.clear()
               setExistUser(null)
+              navigate("/login")
             }}>logout</p>
-            <Link to={"/myprofile"}><img className="avatar" src={existUser.avatar} alt="" /></Link>
+            <Link to={"/myprofile"}><img className="avatar" src={baseURL+existUser.user.avatar} alt="" /></Link>
           </>
         ) : (
           <>

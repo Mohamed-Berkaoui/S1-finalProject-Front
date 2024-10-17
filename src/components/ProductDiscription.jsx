@@ -1,32 +1,30 @@
-import { Rating, Typography } from "@mui/material"
+import { Rating } from "@mui/material"
 import Button from "./Button"
 
 
-function ProductDiscription() {
-    const inStock=true
+function ProductDiscription({product}) {
+
+
   return (
     <div className="product-desc">
               <div className="right">
-        <img src="/images.jpg" alt="" />
+        <img src={product.image} alt="" />
         <div className="rating">
        
        <h4>Product Rating :</h4>
-          <Rating name="read-only" size="large"  value={2} readOnly />
+          <Rating name="read-only" size="large"  value={Math.round(product.rate?.rating)} readOnly />
         </div>
       </div>
       <div className="left">
-        <h2>product titile</h2>
+        <h2>{product.title}</h2>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad eveniet
-          sequi voluptatum molestiae quibusdam dignissimos optio cum ipsam
-          necessitatibus praesentium id facilis vitae error at veritatis,
-          architecto a odio porro?
+      {product.description}
         </p>
-        <h4>price $</h4>
-        <h5 className={inStock ? "available" : "not-available"}>
-          {inStock ? "available" : "not abailable"}
+        <h4>{product.price} $</h4>
+        <h5 className={product.totalQuantity-product.saleCount ? "available" : "not-available"}>
+          {product.totalQuantity-product.saleCount  ? "available" : "not abailable"}
         </h5>
-        {inStock?  <Button >add to cart</Button>:<button className="b-not-available"  disabled>add to cart</button>}
+        {product.totalQuantity-product.saleCount?  <Button >add to cart</Button>:<button className="b-not-available"  disabled>add to cart</button>}
       </div>
     </div>
   )

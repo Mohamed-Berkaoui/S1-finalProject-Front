@@ -12,7 +12,7 @@ function Pagination({search}) {
   const postsPerPage = 10;
   const paginate = (value) => setCurrentPage(value);
 const test=useRef(true)
-const [tosty,setTosty]=useState(true)
+
 
 
   useEffect(() => {
@@ -35,6 +35,9 @@ const [tosty,setTosty]=useState(true)
    
       
   }, [currentPage,search]);
+  useEffect(()=>{
+    setCurrentPage(1)
+  },[search])
 
   return (
 

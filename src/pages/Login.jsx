@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "../styles/loginregister.css"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import appAxios from '../utils/AxiosConfig';
 import { existUserContext } from '../context/UserContext';
@@ -11,7 +11,14 @@ const LoginPage = () => {
     email: '',
     password: ''
   });
+  const navigate=useNavigate()
 
+  const {existUser}=useContext(existUserContext)
+
+useEffect(()=> { if(existUser){
+  navigate(-1)
+}}
+)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -21,6 +28,7 @@ const LoginPage = () => {
     e.preventDefault();
     toast.promise(appAxios.post("/api/auth/login",formData).then(res=>{localStorage.setItem("user",JSON.stringify(res.data.data))
       setExistUser(res.data.data)
+      navigate("/")
     }),{
       pending:'loading',
       success:'success',
