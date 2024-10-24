@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const appAxios = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'https://s1-finalproject-back.onrender.com',
     
   });
-  export const     baseURL= 'http://localhost:8000'
+  export const     baseURL= 'https://s1-finalproject-back.onrender.com'
   export default appAxios
