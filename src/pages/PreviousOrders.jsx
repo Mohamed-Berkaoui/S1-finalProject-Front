@@ -2,17 +2,20 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import PrevOrderBox from "../components/PrevOrderBox";
 import "../styles/prevorderspage.css"
+import useFectOrdes from "../customHooks/useFectOrdes";
 
 
 function PreviousOrders() {
   const navigate = useNavigate();
+  const prevOrders=useFectOrdes()
   return (
     <div className="oldorders-container">
       <h2>orders </h2>
 
       <div className="oldorders-boxes">
-        {[0, 0, 0].map((product) => (
-          <PrevOrderBox />
+        {prevOrders.map((order) => (
+   
+          <PrevOrderBox order={order}  />
         ))}
       </div>
       <div className="back">

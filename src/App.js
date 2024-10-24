@@ -12,12 +12,13 @@ import OrderPage from "./pages/OrderPage";
 import ProfilePage from "./pages/ProfilePage";
 import PreviousOrders from "./pages/PreviousOrders";
 import { useEffect } from "react";
+import ProtectedRoutes from "./ProtectedRoutes";
+import ValidateUser from "./pages/ValidateUser";
 
 function App() {
-  useEffect(()=>window.scrollTo(0, 0))
+  useEffect(() => window.scrollTo(0, 0));
   return (
     <>
-
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,10 +26,14 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/products/" element={<OurProductsPage />} />
         <Route path="/products/:id" element={<ProductPage />} />
-        <Route path="/mycart" element={<CartPage />} />
-        <Route path="/order" element={<OrderPage />} />
-        <Route path="/myprofile" element={<ProfilePage />} />
-        <Route path="/myorders" element={<PreviousOrders/>}/>
+        <Route path="/validateUser/:hash" element={<ValidateUser />} />
+
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/mycart" element={<CartPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/myprofile" element={<ProfilePage />} />
+          <Route path="/myorders" element={<PreviousOrders />} />
+        </Route>
       </Routes>
       <Footer />
     </>

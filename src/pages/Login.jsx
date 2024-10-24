@@ -28,11 +28,13 @@ useEffect(()=> { if(existUser){
     e.preventDefault();
     toast.promise(appAxios.post("/api/auth/login",formData).then(res=>{localStorage.setItem("user",JSON.stringify(res.data.data))
       setExistUser(res.data.data)
+      console.log(res)
+
       navigate("/")
     }),{
       pending:'loading',
       success:'success',
-      error:"error"
+      error:"not valid user "
     }  
   )
  };

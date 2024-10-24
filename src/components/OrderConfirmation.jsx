@@ -1,21 +1,24 @@
 import { MenuItem, Select } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { useContext } from "react";
+import { existUserContext } from "../context/UserContext";
 
-function OrderConfirmation() {
-  const [orderInfos, setOrderInfos] = useState({
-    address: "personal address",
-    paymentMethod: "on delivary",
-  });
-  function handleInfosChange(e) {
-    setOrderInfos({ ...orderInfos, address: e.target.value });
-  }
-  function handlePaymentChange(e) {
-    setOrderInfos({ ...orderInfos, paymentMethod: e.target.value });
-  }
+
+function OrderConfirmation({
+  handlePaymentChange,
+  handleInfosChange,
+  orderInfos,
+  handleorderAddressChange,
+  postOrder
+
+}) {
+
+  const {existUser}=useContext(existUserContext)
+
+
   return (
     <div className="order-confirm">
       <h2> complete your order</h2>
-      <form>
+      <form onSubmit={postOrder}>
         <h4>select adress</h4>
         <div>
           <div>
@@ -25,8 +28,22 @@ function OrderConfirmation() {
               name="userAdress"
               value={"personal address"}
               onChange={handleInfosChange}
+              
             />
+            
           </div>
+          <div
+              className="hidden-input"
+              style={{
+                display:
+                  orderInfos.address === "personal address" ? "block" : "none",
+              }}
+            >
+              <select name="address" onChange={handleorderAddressChange}>
+                <option selected>choose your address</option>
+                {existUser.user.addresses.map(adress=><option value={adress}>{adress}</option>)}
+              </select>
+            </div>
           <div>
             <label htmlFor="">other adress</label>
             <input
@@ -35,16 +52,17 @@ function OrderConfirmation() {
               value={"other address"}
               onChange={handleInfosChange}
             />
+     
           </div>
 
           <div
             className="hidden-input"
             style={{
               display:
-                orderInfos.address === "personal address" ? "none" : "block",
+                orderInfos.address === "other address" ? "block" : "none",
             }}
           >
-            <input type="text" />
+            <input type="text" onChange={handleorderAddressChange}/>
           </div>
         </div>
 
@@ -55,11 +73,15 @@ function OrderConfirmation() {
             onChange={handlePaymentChange}
             inputProps={{ "aria-label": "Without label" }}
           >
-            <MenuItem value={"on delivery"}>on delivary</MenuItem>
-            <MenuItem value={"paypal"}>paypal</MenuItem>
+
+            <MenuItem selected={true} value={"on delivery"}  >on delivary</MenuItem>
+            <MenuItem id="myRadioField" value={"paypal"}>paypal</MenuItem>
           </Select>
+    
+          <div id="paypal-button-container"></div>
         </div>
-        <input type="submit"/>
+       
+        <input type="submit" />
       </form>
     </div>
   );
